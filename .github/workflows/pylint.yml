@@ -17,9 +17,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pylint
+        pip install -r requirements.txt
     - name: Analysing the code with pylint
       run: |
-        pylint api test utilities  --fail-under=9.75
+        pylint api test utilities --fail-under=9.75
     - name: Run tests
       run: |
         pytest -s
