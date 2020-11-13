@@ -1,6 +1,6 @@
 # herokuapp-tests
-![Pylint](https://github.com/vit-ganich/herokuapp-tests/workflows/Pylint/badge.svg) 
- 
+![Test](https://github.com/vit-ganich/herokuapp-tests/workflows/Test/badge.svg)  
+
 **API test automation task**
 
 1. Clone the repository
