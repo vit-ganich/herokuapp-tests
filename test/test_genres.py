@@ -18,17 +18,30 @@ def test_create_genre():
 
     genre_name = f"Genre {randrange(0, 10000)}"
     actual_genre_created = genre.create(genre_name)
-    genre_id = actual_genre_created["id"]
 
     expected_genre = {
-        'id': genre_id,
+        'id': genre.current_id,
         'name': genre_name
     }
 
     assert actual_genre_created == expected_genre
 
-    actual_genre_get = genre.read(genre_id)
+    actual_genre_get = genre.read(genre.current_id)
     assert actual_genre_get == expected_genre
+
+
+def test_negative_verify_error_message():
+    """Verify the error message if parameter missing"""
+    name = ""
+    actual_msg = ""
+    exp_msg = "Validation failed: Name can't be blank"
+
+    try:
+        genre.create(name)
+    except RequestError as err:
+        actual_msg = err.message
+
+    assert exp_msg in actual_msg
 
 
 def test_update_genre():

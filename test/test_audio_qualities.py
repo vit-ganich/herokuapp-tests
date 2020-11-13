@@ -33,6 +33,20 @@ def test_create_audio_quality():
     assert actual_audio_q_get == exp_audio_q
 
 
+def test_negative_verify_error_message():
+    """Verify the error message if parameter missing"""
+    name = ""
+    actual_msg = ""
+    exp_msg = "Validation failed: Name can't be blank"
+
+    try:
+        audio_quality.create(name)
+    except RequestError as err:
+        actual_msg = err.message
+
+    assert exp_msg in actual_msg
+
+
 def test_update_audio_quality():
     """Update the item, check it was updated correctly"""
 

@@ -18,10 +18,9 @@ def test_create_video_quality():
 
     name = f"Quality {randrange(0, 10000)}"
     actual_video_q_created = video_quality.create(name)
-    video_q_id = actual_video_q_created["id"]
 
     exp_video_q = {
-        "id": video_q_id,
+        "id": video_quality.current_id,
         "name": name,
         "abbr": "AbbrVideoTest",
         "position": 1,
@@ -30,9 +29,24 @@ def test_create_video_quality():
 
     assert actual_video_q_created == exp_video_q
 
-    actual_video_q_get = video_quality.read(video_q_id)
+    actual_video_q_get = video_quality.read(video_quality.current_id)
     assert actual_video_q_get == exp_video_q
 
+
+def test_negative_verify_error_message():
+    """Verify the error message if parameter missing"""
+    name = "Test Name"
+    abbr = ""
+
+    actual_msg = ""
+    exp_msg = "Validation failed: Abbr can't be blank"
+
+    try:
+        video_quality.create(name, abbr=abbr)
+    except RequestError as err:
+        actual_msg = err.message
+
+    assert exp_msg in actual_msg
 
 def test_update_video_quality():
     """Update the item, check it was updated correctly"""
