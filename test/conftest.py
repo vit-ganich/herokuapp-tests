@@ -1,3 +1,5 @@
+"""Test configuration for all tests"""
+
 from pytest import fixture
 
 from api.audio_quality import AudioQuality
@@ -13,6 +15,7 @@ genre = Genre()
 
 @fixture(scope="session", autouse=True)
 def hook():
+    """Setup and teardown hooks"""
     yield
     print("\nTeardown")
 
