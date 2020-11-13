@@ -23,4 +23,10 @@ jobs:
         pylint api test utilities --fail-under=9.70
     - name: Run tests
       run: |
-        pytest -s
+        pytest --html=reports/pytest_report.html -s
+    - name: Upload test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: reports/pytest_report.html
+        retention-days: 2
