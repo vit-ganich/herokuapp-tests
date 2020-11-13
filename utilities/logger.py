@@ -6,6 +6,6 @@ def debug(value: str):
     print(value)
 
 
-def info(value: str):
+def info(text: str):
     """Info logging"""
-    print(value)
+    print(text)
