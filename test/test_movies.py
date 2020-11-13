@@ -1,15 +1,21 @@
-# from test.test_base import TestBase
+"""Movies tests"""
+
 from random import randrange
 
 from test.conftest import movie
+from utilities.custom_exceptions import RequestError
 
 
 def test_get_movies():
-    movies_list = movie.get_all()
+    """Get all items, check that the response list is not empty"""
+
+    movies_list = movie.read_all()
     assert len(movies_list) > 0
 
 
 def test_create_movie():
+    """Create an item, check it was created correctly"""
+
     movie_title = f"Movie {randrange(0, 10000)}"
     actual_movie_created = movie.create(movie_title)
     movie_id = actual_movie_created["id"]
@@ -27,11 +33,13 @@ def test_create_movie():
 
     assert actual_movie_created == expected_movie
 
-    actual_movie_get = movie.get(movie_id)
+    actual_movie_get = movie.read(movie_id)
     assert actual_movie_get == expected_movie
 
 
 def test_update_movie():
+    """Update the item, check it was updated correctly"""
+
     movie_title = f"New Movie {randrange(0, 10000)}"
     movie_id = movie.current_id
     movie.update(movie_id, movie_title)
@@ -47,18 +55,21 @@ def test_update_movie():
         'genres': []
     }
 
-    actual_movie = movie.get(movie_id)
+    actual_movie = movie.read(movie_id)
     assert actual_movie == exp_movie
 
 
 def test_delete_movie():
+    """Delete the item, check it was deleted (not found)"""
+
     movie_id = movie.current_id
     movie.delete(movie_id)
 
     expected_movie = None
     try:
-        expected_movie = movie.get(movie_id)
-    except ConnectionRefusedError:
+        expected_movie = movie.read(movie_id)
+    except RequestError:
+        # If the request failed - it means, that the item was deleted
         pass
 
     assert expected_movie is None, f"Movie {movie_id} was not deleted"

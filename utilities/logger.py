@@ -1,6 +1,11 @@
+"""Primitive logger just for the example"""
+
+
 def debug(value: str):
-    """There can be any logger"""
+    """Debug logging"""
     print(value)
 
+
 def info(value: str):
+    """Info logging"""
     print(value)
